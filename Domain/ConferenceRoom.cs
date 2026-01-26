@@ -1,11 +1,12 @@
+namespace ConferenceRoomBooking.Domain;
+
 public class ConferenceRoom
 {
     public string RoomNum { get; }
     public int Capacity { get; }
     public RoomType Type { get; }
 
-    private readonly List<Booking> _bookings = new();
-    public IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
+    public Booking? CurrentBooking { get; private set; }
 
     public ConferenceRoom(string roomNum, int capacity, RoomType type)
     {
@@ -20,27 +21,27 @@ public class ConferenceRoom
         Type = type;
     }
 
-    public Booking RequestBooking(
-        DateTime startTime,
-        DateTime endTime,
-        int attendees)
+    public bool BookRoom()
     {
-        if (attendees > Capacity)
-            throw new InvalidOperationException("Room capacity exceeded.");
+        if (CurrentBooking is not null)
+            return false;
 
-        if (!IsAvailable(startTime, endTime))
-            throw new InvalidOperationException("Room is not available for this time slot.");
-
-        var booking = new Booking(startTime, endTime, attendees);
-        _bookings.Add(booking);
-
-        return booking;
+        CurrentBooking = new Booking(RoomNum);
+        return true;
     }
 
-    private bool IsAvailable(DateTime start, DateTime end)
+    public bool CancelBooking()
     {
-        return _bookings
-            .Where(b => b.Status == BookingStatus.Approved)
-            .All(b => end <= b.StartTime || start >= b.EndTime);
+        if (CurrentBooking is null)
+            return false;
+
+        CurrentBooking.Cancel();
+        CurrentBooking = null;
+        return true;
+    }
+
+    public bool IsAvailable()
+    {
+        return CurrentBooking is null;
     }
 }

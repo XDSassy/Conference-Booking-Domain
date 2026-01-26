@@ -1,6 +1,8 @@
+namespace ConferenceRoomBooking.Domain;
+
 public enum BookingStatus
 {
-    Requested,
-    Approved,
-    Cancelled
+    Available,
+    Booked,
+    UnderMaintenance
 }
