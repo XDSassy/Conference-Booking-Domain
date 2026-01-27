@@ -1,23 +1,44 @@
-﻿using System;
-using ConferenceRoomBooking.Domain;
-
-class Program
+﻿using ConferenceRoomBooking.Domain;
+using ConferenceRoomBooking.Services;
+// Create rooms
+var rooms = new List<ConferenceRoom>
 {
-    static void Main()
-    {
-        ConferenceRoom room1 =
-            new ConferenceRoom("A101", 10, RoomType.Standard);
+    new ConferenceRoom("A101", 10, RoomType.Standard),
+    new ConferenceRoom("B202", 20, RoomType.Training)
+};
 
-        Console.WriteLine("Attempting to book room...");
-        bool booked = room1.BookRoom();
-        Console.WriteLine(booked ? "Booked" : "Failed");
+// Create booking service
+var bookingService = new BookingService(rooms);
 
-        Console.WriteLine("Attempting second booking...");
-        booked = room1.BookRoom();
-        Console.WriteLine(booked ? "Booked" : "Failed");
+// Create bookings
+var booking1 = new Booking(
+    "A101",
+    new DateTime(2026, 1, 27, 9, 0, 0),
+    new DateTime(2026, 1, 27, 10, 0, 0)
+);
 
-        Console.WriteLine("Cancelling booking...");
-        bool cancelled = room1.CancelBooking();
-        Console.WriteLine(cancelled ? "Cancelled" : "Failed");
-    }
+var booking2 = new Booking(
+    "A101",
+    new DateTime(2026, 1, 27, 9, 30, 0),
+    new DateTime(2026, 1, 27, 10, 30, 0)
+);
+
+// Try bookings
+Console.WriteLine("Booking 1 accepted: " +
+    bookingService.TryCreateBooking(booking1));
+
+Console.WriteLine("Booking 2 accepted: " +
+    bookingService.TryCreateBooking(booking2));
+
+// Check available rooms
+Console.WriteLine("\nAvailable rooms from 09:00 to 10:00:");
+
+var availableRooms = bookingService.GetAvailableRooms(
+    new DateTime(2026, 1, 27, 9, 0, 0),
+    new DateTime(2026, 1, 27, 10, 0, 0)
+);
+
+foreach (var room in availableRooms)
+{
+    Console.WriteLine(room.RoomNum);
 }
