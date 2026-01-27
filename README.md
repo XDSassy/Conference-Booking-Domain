@@ -1,56 +1,50 @@
-# 🏢 Conference Room Booking System – Domain Model
+# 🏢 Conference Room Booking System – Assignment 1.2
 
-This repository contains a C# domain model for a Conference Room Booking System.
+This repository contains a C# implementation of a Conference Room Booking System, extended from Assignment 1.1 to include **working business logic, collections, and booking rules**.  
 
-The project focuses on modelling the **core business concepts and rules** that will later be reused when building APIs, databases, and user interfaces.
-
-At this stage, the repository contains **domain logic only**, not a full production system.
+The project demonstrates **how bookings are processed, validated, and enforced** using C# collections and LINQ, while maintaining a clean separation between domain models, business logic, and program orchestration.
 
 ---
 
 ## 🗂 Repository Contents
 
 - `README.md` – Project overview  
-- `Program.cs` – Small console application used to demonstrate the domain model  
-- `ConferenceRoom.cs` – Conference room domain entity  
-- `Booking.cs` – Booking domain entity  
-- `BookingStatus.cs` – Booking status enum  
-- `RoomType.cs` – Room type enum  
+- `Program.cs` – Console application demonstrating booking logic  
+- `Domain/ConferenceRoom.cs` – Conference room domain entity  
+- `Domain/Booking.cs` – Booking domain entity  
+- `Domain/BookingStatus.cs` – Booking status enum  
+- `Domain/RoomType.cs` – Room type enum  
+- `Services/BookingService.cs` – Business logic for handling bookings  
 
 ---
 
 ## ⚙️ Installation
 
-- Download or clone the repository from GitHub  
-- Open the project using Visual Studio or VS Code  
-- Ensure **.NET 8 SDK** is installed  
-- Build and run the project  
+- Open the project using Visual Studio or VS Code.  
+- Ensure **.NET 8 SDK** is installed.  
+- Build and run the project.  
 
 ---
 
 ## 📌 Purpose of This Repository
 
-This repository is used for:
+This project demonstrates:
 
-- Practising domain modelling in C#  
-- Creating a clean and reusable core model  
-- Preparing a foundation for future API development  
-
-At this stage, the focus is on **Domain Modelling**, not UI or persistence.
+- Domain modelling with C#  
+- Business logic implementation using **collections** and LINQ  
+- Enforcement of real-world booking rules  
+- Separation of concerns between domain models, business logic, and program orchestration  
 
 ---
 
-## 📋 System Context
+## 📋 System Features
 
-The Conference Room Booking System is intended to manage:
-
-- Conference rooms  
-- Booking creation  
-- Booking cancellation  
-- Booking status  
-- Room types  
-
-Only the core rules and objects are implemented at this stage.
+- Create conference rooms and bookings  
+- Submit booking requests through `BookingService`  
+- Reject overlapping bookings (double-booking prevention)  
+- Reject bookings for non-existent rooms  
+- Cancel bookings and update booking status  
+- Query available rooms for a given time range  
 
 ---
 
@@ -61,16 +55,15 @@ Only the core rules and objects are implemented at this stage.
 Represents a single conference room.
 
 - Stores room number, capacity, and room type  
-- Knows whether it is currently booked  
-- Can create and cancel its own booking  
+- Pure domain model; no internal booking logic  
 
 ### Booking
 
 Represents a single booking.
 
-- Stores the room number  
-- Stores booking status  
+- Stores room number, start time, end time, and status  
 - Can be cancelled  
+- Domain model only; booking logic is handled in `BookingService`  
 
 ### BookingStatus (Enum)
 
@@ -90,28 +83,32 @@ Defines room categories:
 
 ---
 
-## 🧠 Business Rules
+## 🧠 Business Rules Enforced
 
-- A room cannot be booked if it is already booked  
-- A booking cannot be cancelled if none exists  
-- Room number must be provided  
-- Capacity must be greater than zero  
-
-Rules are enforced through constructors and methods, not comments.
+- **No double-booking:** overlapping bookings for the same room are rejected  
+- **Valid room references only:** bookings must be for existing rooms  
+- **Valid booking states:** bookings can only transition through allowed statuses  
+- **Fail-fast:** invalid booking requests are rejected immediately  
 
 ---
 
-## 💪 Developer Onboarding Guide
+## 💡 Implementation Highlights
 
-- This project is developed incrementally for training purposes  
-- Features will be added in later assignments  
-- Keep domain logic separate from UI and infrastructure  
+**Collections Used:**
 
-Technologies used:
+- `List<ConferenceRoom>` – stores all rooms  
+- `Dictionary<string, List<Booking>>` – stores bookings per room for fast lookup  
 
-- C# (.NET 8)  
-- Visual Studio / VS Code  
-- GitHub  
+**LINQ Used:**
+
+- `Any()` – check for conflicting bookings  
+- `Where() + ToList()` – query available rooms  
+
+**Separation of Concerns:**
+
+- Domain models (`Booking`, `ConferenceRoom`) contain data only  
+- `BookingService` contains all business logic  
+- `Program.cs` orchestrates sample bookings and displays results  
 
 ---
 
@@ -119,24 +116,23 @@ Technologies used:
 
 Run the console application to:
 
-- Create a room  
-- Attempt to book it  
-- Prevent double booking  
-- Cancel a booking  
-
-The console output is only for demonstration.
+- Create sample rooms and bookings  
+- Submit booking requests  
+- See which bookings are accepted or rejected  
+- View available rooms for a time range  
 
 ---
 
 ## 🤝 Contributing
 
-Changes should be made using Git commits with clear messages.
+- Use Git commits with **clear, meaningful messages**  
+- Follow logical units of work (domain, service, program, README)  
 
 ---
 
 ## 📄 License
 
-MIT License
+MIT License  
 
 ---
 
@@ -144,4 +140,4 @@ MIT License
 
 Student: XDSassy  
 
-Created as part of Assignment 1.1 – Domain Modelling with C#
+Created as part of **Assignment 1.2 – Business Logic & Collections with C#**
