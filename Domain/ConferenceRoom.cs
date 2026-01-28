@@ -1,3 +1,4 @@
+using ConferenceBookingSystem.Exceptions;
 namespace ConferenceRoomBooking.Domain;
 
 public class ConferenceRoom

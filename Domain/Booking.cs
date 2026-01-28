@@ -1,22 +1,23 @@
+using ConferenceBookingSystem.Exceptions;
 namespace ConferenceRoomBooking.Domain;
 
 public class Booking
 {
-    public string RoomNum { get; private set; }
-    public DateTime StartTime { get; private set; }
-    public DateTime EndTime { get; private set; }
-    public BookingStatus Status { get; private set; }
+    public string RoomNum { get; }
+    public DateTime StartTime { get; }
+    public DateTime EndTime { get;}
+    public BookingStatus Status { get; }
 
     public Booking(string roomNum, DateTime startTime, DateTime endTime)
     {
-        RoomNum = roomNum;
-        StartTime = startTime;
-        EndTime = endTime;
-        Status = BookingStatus.Booked;
-    }
+        if (string.IsNullOrWhiteSpace(roomNumber))
+            throw new BookingException("Room number cannot be empty.");
 
-    public void Cancel()
-    {
-        Status = BookingStatus.Available;
+        if (start >= end)
+            throw new BookingException("Start time must be before end time.");
+
+        RoomNumber = roomNumber;
+        Start = start;
+        End = end;
     }
 }
