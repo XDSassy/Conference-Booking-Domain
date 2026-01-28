@@ -120,22 +120,22 @@ namespace ConferenceRoomBooking.Services
     public class BookingResult
     {
         public bool IsSuccess { get; }
-        public Booking Booking { get; }
-        public string Message { get; }
-        public string Error { get; }
+        public Booking? Booking { get; }  // Add ? to make nullable
+        public string? Message { get; }   // Add ? 
+        public string? Error { get; }     // Add ?
 
-        private BookingResult(bool isSuccess, Booking booking, string message, string error)
+         private BookingResult(bool isSuccess, Booking? booking, string? message, string? error)
         {
-            IsSuccess = isSuccess;
-            Booking = booking;
-            Message = message;
-            Error = error;
-        }
+        IsSuccess = isSuccess;
+        Booking = booking;
+        Message = message;
+        Error = error;
+         }
 
-        public static BookingResult Success(Booking booking, string message = "Operation completed successfully.")
-            => new BookingResult(true, booking, message, null);
+        public static BookingResult Success(Booking booking, string? message = null)
+        => new BookingResult(true, booking, message, null);
 
         public static BookingResult Failure(string error)
-            => new BookingResult(false, null, null, error);
-    }
+        => new BookingResult(false, null, null, error);  // Now valid
+    }   
 }

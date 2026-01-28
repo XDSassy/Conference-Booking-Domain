@@ -8,7 +8,7 @@ public static class BookingFileHandler
     
     public class FileOperationException : Exception
     {
-        public FileOperationException(string message, Exception innerException = null) 
+        public FileOperationException(string message, Exception? innerException = null) 
             : base(message, innerException) { }
     }
 
