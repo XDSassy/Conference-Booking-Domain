@@ -1,143 +1,171 @@
-# 🏢 Conference Room Booking System – Assignment 1.2
+# 🏢 Conference Room Booking System
 
-This repository contains a C# implementation of a Conference Room Booking System, extended from Assignment 1.1 to include **working business logic, collections, and booking rules**.  
+This repository contains a project with the base code for a Conference Room Booking System.
 
-The project demonstrates **how bookings are processed, validated, and enforced** using C# collections and LINQ, while maintaining a clean separation between domain models, business logic, and program orchestration.
+This system will allow employees to search a list of available rooms and book a room for use.
+There will be an administrator login portal giving them access to the administrator dashboard in the future.
+There will also be functionality for a receptionist to book on behalf of another person and for facility managers to book a room for maintenance.
+The code has been laid out with room for expansion for these features.
+
+The current features are:
+1) Booking a room
+2) Canceling a booking
+3) Exporting booking history as a json file
+4) Loading history from a json file
+
+This code will eventually be merged with existing API endpoints and documentation.
+
+---
+
+## Table of Contents
+
+[How Failures are Handled](#How-Failures-are-Handled)
+[Where Async is Used](#Where-Async-is-Used)
+[🗂 Repository Contents](#🗂-Repository-Contents)
+[⚙️ Installation](#⚙️-Installation)
+[📌 Purpose of This Repository](#📌-Purpose-of-This-Repository)
+[📋 System context](#📋-System-context)
+[💪 Developer Onboarding Guide](#💪-Developer-Onboarding-Guide)
+[🗎 Project Documentation](#🗎-Project-Documentation)
+[Key Folders](#Key-Folders)
+[🤝 Contributing](#🤝-Contributing)
+[⏰ Upcoming Documentation](#⏰-Upcoming-Documentation)
+[📄 License](#📄-License)
+[✍️ Author](#✍️-Author)
+
+---
+
+## How Failures are Handled
+
+- In the client code (`Program.cs`), all data that is taken from user input is validated before being passed into methods of other classes
+- In methods (`Booking.cs`, `ConferenceRoom.cs`, `BookingService.cs`), all data is validated before further steps can be taken
+- All validation follows a fail-fast approach to avoid invalid object states
+- Custom exceptions (`BookingException`, `FileOperationException`) provide meaningful error messages
+- The `BookingResult` class handles expected failures without throwing exceptions
+- Different error handling strategies per layer: domain exceptions, service results, and I/O exceptions
+
+---
+
+## Where Async is Used
+
+- This project makes use of async in creating a json file with booking history (`BookingFileHandler.SaveBookingsAsync()`)
+- This project makes use of async in loading a json file with booking history (`BookingFileHandler.LoadBookingsAsync()`)
+- Async operations support cancellation via `CancellationToken`
+- The console application entry point uses `async Task Main()` for proper async flow
+- Background auto-save operations run asynchronously after successful bookings
 
 ---
 
 ## 🗂 Repository Contents
 
-- `README.md` – Project overview  
-- `Program.cs` – Console application demonstrating booking logic  
-- `Domain/ConferenceRoom.cs` – Conference room domain entity  
-- `Domain/Booking.cs` – Booking domain entity  
-- `Domain/BookingStatus.cs` – Booking status enum  
-- `Domain/RoomType.cs` – Room type enum  
-- `Services/BookingService.cs` – Business logic for handling bookings  
+- `README.md` – Project overview
+- `Conference-Booking-Domain.csproj` – Project configuration
+- `Program.cs` – Console application with interactive menu
+- `Domain/` – Core business entities and enums
+- `Services/` – Business logic layer
+- `IO/` – File operations with async support
+- `Exceptions/` – Custom exception types
+- `LICENSE` – MIT License information
 
 ---
 
 ## ⚙️ Installation
 
-- Open the project using Visual Studio or VS Code.  
-- Ensure **.NET 8 SDK** is installed.  
-- Build and run the project.  
+- To install this project, you download the Zip file from GitHub and extract the project files to your selected location.
+- Then you can use VS Code (make sure .NET 8 is installed on your device) to open the C# code and edit if you want to.
+- Any changes will be made using the pull request template provided.
+- Make sure to clone the GitHub repository should you indeed intend on creating pull requests.
 
 ---
 
 ## 📌 Purpose of This Repository
 
-This project demonstrates:
+This repository is used for:
+- Creating the code that will form the base of the Conference Room Booking System
+- Working to eventually merge this work with existing API documentation
+- Gradually improving project documentation over time
+- Gradually improving project code over time
 
-- Domain modelling with C#  
-- Business logic implementation using **collections** and LINQ  
-- Enforcement of real-world booking rules  
-- Separation of concerns between domain models, business logic, and program orchestration  
-
----
-
-## 📋 System Features
-
-- Create conference rooms and bookings  
-- Submit booking requests through `BookingService`  
-- Reject overlapping bookings (double-booking prevention)  
-- Reject bookings for non-existent rooms  
-- Cancel bookings and update booking status  
-- Query available rooms for a given time range  
+At this stage, the repository focuses on **Creating Robust, Production-Ready Code** with proper error handling and async operations.
 
 ---
 
-## 🧱 Domain Concepts
+## 📋 System context
 
-### ConferenceRoom
-
-Represents a single conference room.
-
-- Stores room number, capacity, and room type  
-- Pure domain model; no internal booking logic  
-
-### Booking
-
-Represents a single booking.
-
-- Stores room number, start time, end time, and status  
-- Can be cancelled  
-- Domain model only; booking logic is handled in `BookingService`  
-
-### BookingStatus (Enum)
-
-Defines valid booking states:
-
-- Available  
-- Booked  
-- UnderMaintenance  
-
-### RoomType (Enum)
-
-Defines room categories:
-
-- Standard  
-- Executive  
-- Training  
+The conference room booking system is intended to manage:
+- Room Availability
+- Booking Requests
+- Conflict Prevention
+- Administrator Access
+- Administrator Conflict Resolution
+- Receptionist Ability to Help Employees and Guests
+- Facility Managers Ability to Schedule Rooms for Maintenance
+- Data Persistence through JSON files
+- Robust Error Handling for all operations
 
 ---
 
-## 🧠 Business Rules Enforced
+## 💪 Developer Onboarding Guide
 
-- **No double-booking:** overlapping bookings for the same room are rejected  
-- **Valid room references only:** bookings must be for existing rooms  
-- **Valid booking states:** bookings can only transition through allowed statuses  
-- **Fail-fast:** invalid booking requests are rejected immediately  
+- This project is developed incrementally for a Software training program
+- The project will have additions made to it through assignments and will slowly build up to being a functional booking system for employees
+- Documentation is organised with a pre-determined file structure, that will have files added and/or edited according to the work that is done
+- Project artefacts can be found in the project folders. So far the artefacts available are:
 
----
+    1) Complete C# solution with layered architecture
+    2) Async file operations with error handling
+    3) Defensive programming patterns throughout
 
-## 💡 Implementation Highlights
+- Technologies used so far:
 
-**Collections Used:**
-
-- `List<ConferenceRoom>` – stores all rooms  
-- `Dictionary<string, List<Booking>>` – stores bookings per room for fast lookup  
-
-**LINQ Used:**
-
-- `Any()` – check for conflicting bookings  
-- `Where() + ToList()` – query available rooms  
-
-**Separation of Concerns:**
-
-- Domain models (`Booking`, `ConferenceRoom`) contain data only  
-- `BookingService` contains all business logic  
-- `Program.cs` orchestrates sample bookings and displays results  
+    1) VS Code as a file editor
+    2) Git for version control
+    3) GitHub for repository storage
+    4) .NET 8 for building and running the application
 
 ---
 
-## 🚀 Usage
+## 🗎 Project Documentation
 
-Run the console application to:
+This repository contains C# code and documentation for a conference room booking system.
 
-- Create sample rooms and bookings  
-- Submit booking requests  
-- See which bookings are accepted or rejected  
-- View available rooms for a time range  
+### Key Folders
+
+- `Domain/` – `Booking.cs`, `ConferenceRoom.cs`, `BookingStatus.cs`, `RoomType.cs`
+- `Services/` – `BookingService.cs` with `BookingResult` pattern
+- `IO/` – `BookingFileHandler.cs` with async operations
+- `Exceptions/` – `BookingException.cs` for domain errors
 
 ---
 
 ## 🤝 Contributing
 
-- Use Git commits with **clear, meaningful messages**  
-- Follow logical units of work (domain, service, program, README)  
+Changes to this repository are made using **Pull Requests**.
+
+Contributors should:
+- Create a feature or documentation branch
+- Submit changes via a Pull Request
+- Clearly describe the intent of the change and what was added or changed
+- Follow existing code patterns and conventions
+
+---
+
+## ⏰ Upcoming Documentation
+
+The following sections will be added as the project evolves:
+- API documentations (Swagger/OpenAPI)
+- Runtime instructions (Docker)
+- Developer setup and contribution workflows
+- Common issues reported by users with solutions or notification of the fix being in progress
 
 ---
 
 ## 📄 License
 
-MIT License  
+This project is licensed under the MIT License.
 
 ---
 
 ## ✍️ Author
-
-Student: XDSassy  
-
-Created as part of **Assignment 1.2 – Business Logic & Collections with C#**
+Student: XDSassy
+Created as part of professional software development training.
