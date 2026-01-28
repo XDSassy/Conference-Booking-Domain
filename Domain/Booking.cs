@@ -16,7 +16,7 @@ public class Booking
         if (start >= end)
             throw new BookingException("Start time must be before end time.");
 
-        RoomNumber = roomNumber;
+        RoomNum = roomNum;
         Start = start;
         End = end;
     }

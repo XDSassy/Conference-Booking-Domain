@@ -1,44 +1,100 @@
-﻿using ConferenceRoomBooking.Domain;
-using ConferenceRoomBooking.Services;
-// Create rooms
-var rooms = new List<ConferenceRoom>
+﻿using ConferenceBookingSystem.Domain;
+using ConferenceBookingSystem.Exceptions;
+using ConferenceBookingSystem.IO;
+
+class Program
 {
-    new ConferenceRoom("A101", 10, RoomType.Standard),
-    new ConferenceRoom("B202", 20, RoomType.Training)
-};
+    static async Task Main(string[] args)
+    {
+        List<Booking> bookings = new();
 
-// Create booking service
-var bookingService = new BookingService(rooms);
+        Console.WriteLine("===================================");
+        Console.WriteLine("Welcome to the Booking System");
+        Console.WriteLine("1: Book a Conference Room");
+        Console.WriteLine("2: Cancel a Booking");
+        Console.WriteLine("3: Export Booking history as json file");
+        Console.WriteLine("4: Load history from file");
+        Console.WriteLine("===================================");
+        Console.Write("Select option: ");
 
-// Create bookings
-var booking1 = new Booking(
-    "A101",
-    new DateTime(2026, 1, 27, 9, 0, 0),
-    new DateTime(2026, 1, 27, 10, 0, 0)
-);
+        if (!int.TryParse(Console.ReadLine(), out int input))
+        {
+            Console.WriteLine("Invalid menu selection.");
+            return;
+        }
 
-var booking2 = new Booking(
-    "A101",
-    new DateTime(2026, 1, 27, 9, 30, 0),
-    new DateTime(2026, 1, 27, 10, 30, 0)
-);
+        try
+        {
+            switch (input)
+            {
+                // -------------------------
+                case 1: // BOOK ROOM
+                // -------------------------
+                    Console.WriteLine("Enter room number:");
+                    string roomNumber = Console.ReadLine()!;
 
-// Try bookings
-Console.WriteLine("Booking 1 accepted: " +
-    bookingService.TryCreateBooking(booking1));
+                    Console.WriteLine("Enter start time (yyyy-MM-dd HH:mm):");
+                    DateTime start = DateTime.Parse(Console.ReadLine()!);
 
-Console.WriteLine("Booking 2 accepted: " +
-    bookingService.TryCreateBooking(booking2));
+                    Console.WriteLine("Enter end time (yyyy-MM-dd HH:mm):");
+                    DateTime end = DateTime.Parse(Console.ReadLine()!);
 
-// Check available rooms
-Console.WriteLine("\nAvailable rooms from 09:00 to 10:00:");
+                    Booking newBooking = new Booking(roomNumber, start, end);
+                    bookings.Add(newBooking);
 
-var availableRooms = bookingService.GetAvailableRooms(
-    new DateTime(2026, 1, 27, 9, 0, 0),
-    new DateTime(2026, 1, 27, 10, 0, 0)
-);
+                    Console.WriteLine("Room successfully booked.");
+                    break;
 
-foreach (var room in availableRooms)
-{
-    Console.WriteLine(room.RoomNum);
+                // -------------------------
+                case 2: // CANCEL BOOKING
+                // -------------------------
+                    Console.WriteLine("Enter room number:");
+                    string cancelRoom = Console.ReadLine()!;
+
+                    var bookingToRemove =
+                        bookings.FirstOrDefault(b => b.RoomNumber == cancelRoom);
+
+                    if (bookingToRemove == null)
+                    {
+                        Console.WriteLine("No booking found for that room.");
+                    }
+                    else
+                    {
+                        bookings.Remove(bookingToRemove);
+                        Console.WriteLine("Booking cancelled.");
+                    }
+                    break;
+
+                // -------------------------
+                case 3: // SAVE
+                // -------------------------
+                    await BookingFileHandler.SaveBookingsAsync(
+                        "bookings.json",
+                        bookings);
+
+                    break;
+
+                // -------------------------
+                case 4: // LOAD
+                // -------------------------
+                    bookings = await BookingFileHandler.LoadBookingsAsync(
+                        "bookings.json");
+
+                    Console.WriteLine($"Loaded {bookings.Count} bookings.");
+                    break;
+
+                default:
+                    Console.WriteLine("Invalid selection.");
+                    break;
+            }
+        }
+        catch (BookingException ex)
+        {
+            Console.WriteLine($"Booking error: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
+    }
 }
