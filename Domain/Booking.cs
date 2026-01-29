@@ -3,6 +3,8 @@ namespace ConferenceRoomBooking.Domain;
 
 public class Booking
 {
+    //add conference room
+    
     public string RoomNum { get; }
     public DateTime StartTime { get; }
     public DateTime EndTime { get; }
@@ -24,6 +26,7 @@ public class Booking
         if (startTime < DateTime.Now)
             throw new BookingException("Cannot book rooms in the past.");
 
+        //Room = room; 
         RoomNum = roomNum;
         StartTime = startTime;
         EndTime = endTime;
@@ -39,4 +42,13 @@ public class Booking
         
         Status = BookingStatus.Available;
     }
+}
+// public void confirm()
+{
+    Status = bookingStatus.Confirmed;
+}
+
+public viod Cancel()
+{
+    Status = Bookingstatus.Cancelled;
 }

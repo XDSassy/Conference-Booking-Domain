@@ -139,3 +139,44 @@ namespace ConferenceRoomBooking.Services
         => new BookingResult(false, null, null, error);  // Now valid
     }   
 }
+
+/* Classwork
+public class BokingManager //all bussines rules are here
+{
+    //properties
+    private readonly List<Booking> _bookings
+    
+    //Methods
+    public IReadonlyList<Booking> GetBooking()
+    {
+        return _booking.ToList();
+    }
+    public Booking CreateBooking(BookingRequest request)
+    {
+        //Guard Cluases
+        if(request.Room == null)
+        {
+            throw new ArgumentException("Room must exist");
+        }
+        if (request.Start >= request.End)
+        {
+            throw new ArgumentException("Invalid time range")
+        }
+
+        bool overlaps = _bookings.Any(b => b.Room == request.Room && 
+        b.Status == BookingStatus.Confirmed && requst.Start < b.End &&
+        request.End > b.Start );
+
+        if (overlaps)
+        {
+            throw new BookingConflictException()
+        }
+        Booking booking = new Booking(request.Room, request.Start, request.End);
+
+        booking.Confrim();
+        _booking.Add(booking);
+
+        return booking;
+        
+    }
+}

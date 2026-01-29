@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\rikha\\.nuget\\packages\\": {}
+    "C:\\Users\\Training Center 1\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\rikha\\Conference-Booking-Domain\\Conference-Booking-Domain.csproj",
+      "projectUniqueName": "C:\\Users\\Training Center 1\\Conference-Booking-Domain\\Conference-Booking-Domain.csproj",
       "projectName": "Conference-Booking-Domain",
-      "projectPath": "C:\\Users\\rikha\\Conference-Booking-Domain\\Conference-Booking-Domain.csproj",
-      "packagesPath": "C:\\Users\\rikha\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rikha\\Conference-Booking-Domain\\obj\\",
+      "projectPath": "C:\\Users\\Training Center 1\\Conference-Booking-Domain\\Conference-Booking-Domain.csproj",
+      "packagesPath": "C:\\Users\\Training Center 1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Training Center 1\\Conference-Booking-Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\rikha\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Training Center 1\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
