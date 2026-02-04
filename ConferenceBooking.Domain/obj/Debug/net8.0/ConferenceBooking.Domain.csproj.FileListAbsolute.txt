@@ -1,0 +1,12 @@
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\bin\Debug\net8.0\ConferenceBooking.Domain.deps.json
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\bin\Debug\net8.0\ConferenceBooking.Domain.dll
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\bin\Debug\net8.0\ConferenceBooking.Domain.pdb
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.AssemblyInfoInputs.cache
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.AssemblyInfo.cs
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.csproj.CoreCompileInputs.cache
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.sourcelink.json
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.dll
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\refint\ConferenceBooking.Domain.dll
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ConferenceBooking.Domain.pdb
+C:\Users\rikha\Conference-Booking-Domain\ConferenceBooking.Domain\obj\Debug\net8.0\ref\ConferenceBooking.Domain.dll

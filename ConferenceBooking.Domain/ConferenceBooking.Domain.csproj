@@ -1,9 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- No OutputType = it's now a class library -->
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>ConferenceBooking.Domain</RootNamespace> <!-- Fixed namespace -->
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Add this reference for JSON serialization -->
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
 </Project>
