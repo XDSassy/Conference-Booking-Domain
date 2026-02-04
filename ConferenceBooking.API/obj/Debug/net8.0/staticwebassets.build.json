@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JKmjo6fWLDnpCwSHoHzVNSMkk7MAa74a/qBkgMa5qcc=",
+  "Source": "ConferenceBooking.API",
+  "BasePath": "_content/ConferenceBooking.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
